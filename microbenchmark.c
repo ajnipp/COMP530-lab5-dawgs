@@ -4,7 +4,7 @@
 void help() {
   printf("Usage: microbenchmark [options]\n");
   printf("Options:\n");
-  printf("  -c <num>  Number of clients\n");
+  printf("  -d <str>  disk path for both source and target\n");
 }
 
 int main(int argc, char **argv) {
