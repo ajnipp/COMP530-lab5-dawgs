@@ -6,8 +6,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-char* disk_path = DEFAULT_HDD_DISK_PATH;
-char* write_pattern = DEFAULT_PATTERN;
+#ifndef O_DIRECT
+#define O_DIRECT 040000
+#endif
+
+#define MAX_PATH 256
+
+char disk_path[MAX_PATH] = DEFAULT_HDD_DISK_PATH;
+char write_pattern[MAX_PATH] = DEFAULT_PATTERN;
 
 int open_disk();
 int close_disk();
@@ -84,7 +90,7 @@ long random_io(int read, long total_size, long granularity, long min_offset, lon
 }
 
 int open_disk() {
-    int fd = open(disk_path, O_DIRECT | O_RDWR);
+    int fd = open(disk_path, O_RDWR | O_DIRECT);
     if (fd == -1) {
         perror("open");
         return -1;

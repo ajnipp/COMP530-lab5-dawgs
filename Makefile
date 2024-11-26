@@ -1,15 +1,15 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -O2 -g
 
-TARGET = benchmark_tests
-SRCS = benchmark_tests.c benchmarks.c microbenchmark.c
+TEST = benchmark_tests
+SRCS = benchmark_tests.c benchmarks.c 
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
 
-all: $(TARGET)
+test: $(TEST)
 
-$(TARGET): $(OBJS)
+$(TEST): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c
