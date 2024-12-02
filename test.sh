@@ -78,6 +78,7 @@ for test_type in "size" "random"; do
     done
 done
 
+
 # Section for stride
 
 declare -A STRIDE_GRANULARITIES=(
@@ -98,15 +99,15 @@ READABLE_STRIDE_GRANULARITIES=(
     "8MB"
 )
 
-    for operation in "read" "write"; do
-        for human_readable_stride in "${READABLE_STRIDE_GRANULARITIES[@]}"; do
-            stride_size=${STRIDE_GRANULARITIES[$human_readable]}
-            for human_readable in "${READABLE_GRANULARITIES[@]}"; do
-                granularity=${GRANULARITIES[$human_readable]}
+for operation in "read" "write"; do
+    for human_readable_stride in "${READABLE_STRIDE_GRANULARITIES[@]}"; do
+        stride_size=${STRIDE_GRANULARITIES[$human_readable_stride]}
+        for human_readable in "${READABLE_GRANULARITIES[@]}"; do
+            granularity=${GRANULARITIES[$human_readable]}
             for ((trial = 1; trial <= TRIALS; trial++)); do
-                echo "Running stride ($operation), Stride: ${human_readable_stride} ($granularity bytes), Trial: $trial"
+                echo "Running stride ($operation), Stride: ${human_readable_stride}, Granularity: ($human_readable), Trial: $trial"
                 # Build arguments based on the test type
-                local test_args="-d $TEST_FILE -t $TEST_SIZE -g $granularity"
+                test_args="-d $TEST_FILE -t $TEST_SIZE -g $granularity"
                 if [ "$operation" == "write" ]; then
                     test_args+=" -w"
                 fi
@@ -114,6 +115,8 @@ READABLE_STRIDE_GRANULARITIES=(
                 result=$(./mbench stride $test_args | grep -oE '[0-9]+')
 
                 # Append to CSV
-                echo "$test_type,$operation,$granularity,$human_readable,1,$trial,$result" >> "$OUTPUT_CSV"
+                echo "stride,$operation,$granularity,$human_readable,$human_readable_stride,$trial,$result" >> "$OUTPUT_CSV"
             done
         done
+    done
+done
