@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
     }
 
   // Parse options
-  char c;
+  int c;
   while ((c = getopt(argc, argv, "d:t:g:p:s:l:u:w")) != -1) {
     switch (c) {
       case 'd':

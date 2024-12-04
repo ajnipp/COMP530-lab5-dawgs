@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include "benchmarks.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -137,9 +138,9 @@ long random_io(int read, long total_size, long granularity, long min_offset, lon
 }
 
 int open_disk() {
-    int fd = open(disk_path, O_RDWR | O_DIRECT);
+    int fd = open(disk_path, O_RDWR | O_CREAT | O_DIRECT, S_IRWXU);
     if (fd == -1) {
-        perror("open");
+        perror("opening ur mom");
         return -1;
     }
     return fd;
