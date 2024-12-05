@@ -1,3 +1,7 @@
+// PID: 730477560
+// PID: 730461954
+// I pledge the COMP530 honor code.
+
 #define READ_M 1
 #define WRITE_M 0
 #define DEFAULT_HDD_DISK_PATH "/dev/sda"

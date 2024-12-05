@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Settings
-TEST_FILE="./test-file"
-OUTPUT_CSV="results.csv"
+TEST_FILE=$1
+OUTPUT_CSV=$2
 TRIALS=5
 declare -A GRANULARITIES=(
     ["4KB"]=$((4 * 1024))
@@ -73,7 +73,7 @@ run_test() {
 }
 
 for test_type in "size" "random"; do
-    for operation in "read" "write"; do
+    for operation in "write" "read"; do
         run_test $test_type $operation
     done
 done
@@ -99,7 +99,7 @@ READABLE_STRIDE_GRANULARITIES=(
     "8MB"
 )
 
-for operation in "read" "write"; do
+for operation in "write" "read"; do
     for human_readable_stride in "${READABLE_STRIDE_GRANULARITIES[@]}"; do
         stride_size=${STRIDE_GRANULARITIES[$human_readable_stride]}
         for human_readable in "${READABLE_GRANULARITIES[@]}"; do
